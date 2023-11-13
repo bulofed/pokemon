@@ -1,5 +1,5 @@
 from src.pokemon.type.IType import IType
-from src.Const import TYPE, RELATION
+from src.Const import TYPE
 
 class WaterType(IType):
     def __init__(self) -> None:
@@ -7,6 +7,3 @@ class WaterType(IType):
         self.name:TYPE = TYPE.WATER
         self.weakness:list[TYPE] = [TYPE.GRASS]
         self.strength:list[TYPE] = [TYPE.FIRE]
-        
-    def relation(self, type: TYPE) -> RELATION:
-        return super().relation(type)

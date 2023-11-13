@@ -3,19 +3,9 @@ from abc import ABC, abstractmethod
 from src.Const import TYPE, CATEGORY
 
 class IAttack(ABC):
-    
     @abstractmethod
-    def execute(self: IAttack) -> None:
-        pass
-    
+    def getPower(self: IAttack) -> int:pass
     @abstractmethod
-    def getPower(self: IAttack) -> int:
-        pass
-    
+    def getCategory(self: IAttack) -> CATEGORY:pass
     @abstractmethod
-    def getCategory(self: IAttack) -> CATEGORY:
-        pass
-    
-    @abstractmethod
-    def getType(self: IAttack) -> TYPE:
-        pass
+    def getType(self: IAttack) -> TYPE:pass

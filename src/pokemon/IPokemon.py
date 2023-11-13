@@ -4,64 +4,28 @@ from src.pokemon.type.IType import IType
 from src.pokemon.attack.IAttack import IAttack
 from src.pokemon.stats.Stats import Stats
 
+from src.Const import GROUP
+
 class IPokemon(ABC):
-    
     @abstractmethod
-    def getName(self: IPokemon) -> str:
-        pass
-    
+    def getName(self: IPokemon) -> str:pass
     @abstractmethod
-    def getSpecie(self: IPokemon) -> str:
-        pass
-    
+    def getSpecie(self: IPokemon) -> str:pass
     @abstractmethod
-    def getHpMax(self: IPokemon) -> int:
-        pass
-    
+    def getHpMax(self: IPokemon) -> int:pass
     @abstractmethod
-    def getHp(self: IPokemon) -> int:
-        pass
-    
+    def getHp(self: IPokemon) -> int:pass
     @abstractmethod
-    def getLevel(self: IPokemon) -> int:
-        pass
-    
+    def getLevel(self: IPokemon) -> int:pass
     @abstractmethod
-    def getExp(self: IPokemon) -> int:
-        pass
-    
+    def getExp(self: IPokemon) -> int:pass
     @abstractmethod
-    def getTypes(self: IPokemon) -> list[IType]:
-        pass
-    
+    def getExpGroup(self: IPokemon) -> GROUP:pass
     @abstractmethod
-    def getAttacks(self: IPokemon) -> list[IAttack]:
-        pass
-    
+    def getExpYielded(self: IPokemon) -> int:pass
     @abstractmethod
-    def getStats(self: IPokemon) -> Stats:
-        pass
-    
+    def getTypes(self: IPokemon) -> list[IType]:pass
     @abstractmethod
-    def addHp(self: IPokemon, hp: int) -> None:
-        pass
-    
+    def getAttacks(self: IPokemon) -> list[IAttack]:pass
     @abstractmethod
-    def setStats(self: IPokemon, stats: Stats) -> None:
-        pass
-    
-    @abstractmethod
-    def addExp(self: IPokemon, exp: int) -> None:
-        pass
-    
-    @abstractmethod
-    def isAlive(self: IPokemon) -> bool:
-        pass
-    
-    @abstractmethod
-    def addAttack(self: IPokemon, attack: IAttack, attackToReplace: IAttack = None) -> None:
-        pass
-    
-    @abstractmethod
-    def removeAttack(self: IPokemon, attack: IAttack) -> None:
-        pass
+    def getStats(self: IPokemon) -> Stats:pass

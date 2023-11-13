@@ -1,5 +1,5 @@
 from src.pokemon.type.Type import Type
-from src.Const import TYPE, RELATION
+from src.Const import TYPE
 
 class GrassType(Type):
     def __init__(self) -> None:
@@ -7,6 +7,3 @@ class GrassType(Type):
         self.name:TYPE = TYPE.GRASS
         self.weakness:list[TYPE] = [TYPE.FIRE]
         self.strength:list[TYPE] = [TYPE.WATER]
-        
-    def relation(self, type: TYPE) -> RELATION:
-        return super().relation(type)

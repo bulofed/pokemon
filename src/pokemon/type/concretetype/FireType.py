@@ -1,5 +1,5 @@
 from src.pokemon.type.Type import Type
-from src.Const import TYPE, RELATION
+from src.Const import TYPE
 
 class FireType(Type):
     def __init__(self) -> None:
@@ -7,6 +7,3 @@ class FireType(Type):
         self.name:TYPE = TYPE.FIRE
         self.weakness:list[TYPE] = [TYPE.WATER]
         self.strength:list[TYPE] = [TYPE.GRASS]
-        
-    def relation(self, type: TYPE) -> RELATION:
-        return super().relation(type)

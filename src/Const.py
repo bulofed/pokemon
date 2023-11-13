@@ -24,3 +24,14 @@ CATEGORY.NONE:str = ""
 CATEGORY.PHYSICAL:str = "Physical"
 CATEGORY.SPECIAL:str = "Special"
 CATEGORY.STATUS:str = "Status"
+
+# Experience Groups
+
+GROUP = type("GROUP", (), {})
+
+GROUP.MEDIUM_FAST = "Medium Fast"
+GROUP.ERATIC = "Eratic"
+GROUP.FLUCTUATING = "Fluctuating"
+GROUP.MEDIUM_SLOW = "Medium Slow"
+GROUP.FAST = "Fast"
+GROUP.SLOW = "Slow"

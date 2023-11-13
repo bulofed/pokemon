@@ -12,14 +12,13 @@ class Attack(IAttack):
         self.pp:int = 0
         self.max_pp:int = 0
         
-    def execute(self) -> None:
-        self.pp -= 1
+    # Getters
         
-    def getPower(self: IAttack) -> int:
-        return self.power
-    
-    def getCategory(self: IAttack) -> CATEGORY:
-        return self.category
-    
-    def getType(self: IAttack) -> TYPE:
-        return self.type
+    def getName(self) -> str:return self.name
+    def getPower(self) -> int:return self.power
+    def getCategory(self) -> CATEGORY:return self.category
+    def getType(self) -> TYPE:return self.type
+        
+    def execute(self) -> None:
+        '''Execute the attack'''
+        self.pp -= 1

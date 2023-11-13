@@ -11,6 +11,3 @@ class EmberAttack(Attack):
         self.precision:int = 100
         self.pp:int = 25
         self.max_pp:int = 25
-        
-    def execute(self) -> None:
-        super().execute()

@@ -11,6 +11,3 @@ class TackleAttack(Attack):
         self.precision:int = 100
         self.pp:int = 35
         self.max_pp:int = 35
-        
-    def execute(self) -> None:
-        super().execute()
