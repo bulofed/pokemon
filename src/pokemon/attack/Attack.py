@@ -17,3 +17,9 @@ class Attack(IAttack):
         
     def getPower(self: IAttack) -> int:
         return self.power
+    
+    def getCategory(self: IAttack) -> CATEGORY:
+        return self.category
+    
+    def getType(self: IAttack) -> TYPE:
+        return self.type

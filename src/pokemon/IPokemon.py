@@ -23,6 +23,10 @@ class IPokemon(ABC):
         pass
     
     @abstractmethod
+    def getLevel(self: IPokemon) -> int:
+        pass
+    
+    @abstractmethod
     def getExp(self: IPokemon) -> int:
         pass
     

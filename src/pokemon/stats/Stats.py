@@ -1,20 +1,23 @@
 from __future__ import annotations
 from random import randint
 
+from src.Const import CATEGORY
+
 class Stats:
-    def __init__(self: Stats) -> None:
+    def __init__(self: Stats, level: int = 1) -> None:
         self.ivHp = randint(0, 31)
         self.ivAttack = randint(0, 31)
         self.ivDefense = randint(0, 31)
         self.ivSpecialAttack = randint(0, 31)
         self.ivSpecialDefense = randint(0, 31)
         self.ivSpeed = randint(0, 31)
-        self.evHp = 0
-        self.evAttack = 0
-        self.evDefense = 0
-        self.evSpecialAttack = 0
-        self.evSpecialDefense = 0
-        self.evSpeed = 0
+        self.evHp = 1
+        self.evAttack = 1
+        self.evDefense = 1
+        self.evSpecialAttack = 1
+        self.evSpecialDefense = 1
+        self.evSpeed = 1
+        self.level = level
     
     def setIvHp(self: Stats, ivHp: int) -> None:
         self.ivHp = ivHp
@@ -87,3 +90,31 @@ class Stats:
     
     def getEvSpeed(self: Stats) -> int:
         return self.evSpeed
+    
+    def getDefense(self, category: CATEGORY) -> int:
+        if category == CATEGORY.PHYSICAL:
+            return self.getDefensePhysical()
+        elif category == CATEGORY.SPECIAL:
+            return self.getDefenseSpecial()
+        else:
+            return 0
+        
+    def getDefensePhysical(self: Stats) -> int:
+        return int((2 * 45 + self.ivDefense + self.evDefense / 4) * self.level / 100 + 5)
+    
+    def getDefenseSpecial(self: Stats) -> int:
+        return int((2 * 45 + self.ivSpecialDefense + self.evSpecialDefense / 4) * self.level / 100 + 5)
+        
+    def getAttack(self, category: CATEGORY) -> int:
+        if category == CATEGORY.PHYSICAL:
+            return self.getAttackPhysical()
+        elif category == CATEGORY.SPECIAL:
+            return self.getAttackSpecial()
+        else:
+            return 0
+        
+    def getAttackPhysical(self: Stats) -> int:
+        return int((2 * 45 + self.ivAttack + self.evAttack / 4) * self.level / 100 + 5)
+    
+    def getAttackSpecial(self: Stats) -> int:
+        return int((2 * 45 + self.ivSpecialAttack + self.evSpecialAttack / 4) * self.level / 100 + 5)
