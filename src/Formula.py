@@ -44,10 +44,12 @@ def expFormula(expGroup: GROUP, level: int, exp: int) -> (int, int):
     
     while exp >= expNeeded:
         if level == 100:
+            exp = expNeeded
             return level, int(exp)
         level += 1
+        exp -= expNeeded
         expNeeded = next(threshold[1](level) for threshold in expThresholds[expGroup] if level < threshold[0])
-        
+    
     return level, int(exp)
 
 def gainFormula(isWild: bool, expYielded: int, level: int) -> int:
@@ -74,23 +76,19 @@ def criticalFormula(attackStage: int, heldItem: HeldItem, status_list: list[Stat
         
     returns:
         bool: True if the attack is critical, False otherwise'''
-    
-    if heldItem and (heldItem.getName() == 'Scope Lens' or heldItem.getName() == 'Razor Claw'):
-        attackStage += 1
-    if any(status.getName() == 'Focus Energy' for status in status_list):
-        attackStage += 2
-    if any(status.getName() == 'Dire Hit' for status in status_list):
-        attackStage += 2
         
-    if attackStage <= 0:
-        chance = 16
-    elif attackStage == 1:
-        chance = 8
-    elif attackStage == 2:
-        chance = 4
-    elif attackStage == 3:
-        chance = 3
+    itemsOne = ['Scope Lens', 'Razor Claw']
+    statusTwo = ['Focus Energy', 'Dire Hit']
+    
+    if heldItem is not None and heldItem.getName() in itemsOne:
+        attackStage += 1
+    for status in status_list:
+        if status.getName() in statusTwo:
+            attackStage += 2
+    
+    if attackStage > 0:
+        chance = max(16 // (2 * attackStage), 2)
     else:
-        chance = 2
+        chance = 16
     
     return randint(1, chance) == 1

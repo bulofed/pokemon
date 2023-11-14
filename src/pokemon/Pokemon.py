@@ -27,7 +27,8 @@ class Pokemon(IPokemon):
                  attacks: list[IAttack],
                  stats: Stats = None,
                  isWild: bool = True,
-                 heldItem: IHeldItem = None):
+                 heldItem: IHeldItem = None,
+                 ):
         self.name = name
         self.specie = specie
         self.hpMax = hpMax
@@ -41,7 +42,7 @@ class Pokemon(IPokemon):
         self.stats = stats if stats is not None else Stats(level)
         self.wild = isWild
         self.heldItem = heldItem
-        self.status = []
+        self.status:list[IStatus] = []
         
     # Getters
         
@@ -72,10 +73,14 @@ class Pokemon(IPokemon):
         
         args:
             exp (int): The exp to add'''
-            
-        levelToAdd, remainingExp = expFormula(self.expGroup, self.level, exp)
-        self.level += levelToAdd
+        
+        if self.level == 100:
+            return self.level
+        oldLevel = self.level
+        newLevel, remainingExp = expFormula(self.expGroup, self.level, exp)
+        self.level = newLevel
         self.exp = remainingExp
+        return oldLevel
         
     def isAlive(self) -> bool:
         '''Return True if the pokemon is alive, False otherwise'''
@@ -116,7 +121,6 @@ class Pokemon(IPokemon):
         stab = 1.5 if attack.getType() in self.types else 1
         critical_hit = criticalFormula(attack.getStage(), self.heldItem, self.status)
         type_multipliers = []
-        efficacityMessage = None
 
         for target_type in target.types:
             
@@ -124,16 +128,25 @@ class Pokemon(IPokemon):
             
             if relation == RELATION.STRONG:
                 type_multipliers.append(2)
-                efficacityMessage = "It's super effective !"
             elif relation == RELATION.WEAK:
                 type_multipliers.append(0.5)
-                efficacityMessage = "It's not very effective..."
             elif relation == RELATION.IMMUNE:
                 type_multipliers.append(0)
-                efficacityMessage = "...But it has no effect."
             else:
                 type_multipliers.append(1)
+        
+        efficacityMessage = ""
+        
+        if 0 in type_multipliers:
+            efficacityMessage = f"But it doesn't affect {target.getName()}"
+        elif 2 in type_multipliers and 0.5 in type_multipliers:
+            efficacityMessage = ""
+        elif 2 in type_multipliers:
+            efficacityMessage = "It's super effective !"
+        elif 0.5 in type_multipliers:
+            efficacityMessage = "It's not very effective..."
 
+        
         type1, type2 = type_multipliers[:2] + [1] * (2 - len(type_multipliers))
 
         random = (randint(85, 100)/100)
@@ -147,14 +160,17 @@ class Pokemon(IPokemon):
         print(f'{self.getName()} used {attack.getName()}')
         
         if critical_hit:
-            print("Critical hit !")
+            print("Critical hit !\n")
             
-        if efficacityMessage:
-            print(efficacityMessage)
+        print(efficacityMessage)
             
-        print(f'{target.getName()} took {damage} damage\n')
+        if damage > 0:
+            print(f'{target.getName()} took {damage} damage\n')
         
         if not target.isAlive():
             expYielded = gainFormula(target.wild, target.getExpYielded(), target.getLevel())
-            self.addExp(expYielded)
-            print(f'{target.getName()} fainted\n{self.getName()} gained {expYielded} exp and is now level {self.getLevel()}')
+            oldLevel = self.addExp(expYielded)
+            print(f'{target.getName()} fainted\n{self.getName()} gained {expYielded} exp.\n')
+            if self.level > oldLevel:
+                print(f'{self.getName()} grew to level {self.level} !\n')
+                self.stats.printAllEVs()

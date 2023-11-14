@@ -119,3 +119,11 @@ class Stats():
     
     def getAttackSpecial(self: Stats) -> int:
         return int((2 * 45 + self.ivSpecialAttack + self.evSpecialAttack / 4) * self.level / 100 + 5)
+    
+    def printAllEVs(self: Stats) -> int:
+        print('HP: ' + str(self.evHp))
+        print('Attack: ' + str(self.evAttack))
+        print('Defense: ' + str(self.evDefense))
+        print('Special Attack: ' + str(self.evSpecialAttack))
+        print('Special Defense: ' + str(self.evSpecialDefense))
+        print('Speed: ' + str(self.evSpeed))
