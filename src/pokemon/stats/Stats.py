@@ -3,7 +3,8 @@ from random import randint
 
 from src.Const import CATEGORY
 
-class Stats:
+class Stats():
+    
     def __init__(self: Stats, level: int = 1) -> None:
         self.ivHp = randint(0, 31)
         self.ivAttack = randint(0, 31)

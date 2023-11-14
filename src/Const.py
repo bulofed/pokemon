@@ -5,16 +5,16 @@ RELATION = type("RELATION", (), {})
 RELATION.WEAK:str = "weak"
 RELATION.NEUTRAL:str = "neutral"
 RELATION.STRONG:str = "strong"
+RELATION.IMMUNE:str = "immune"
 
 # Type
 
 TYPE = type("TYPE", (), {})
 
-TYPE.NONE:str = ""
 TYPE.NORMAL:str = "Normal"
+TYPE.GRASS:str = "Grass"
 TYPE.FIRE:str = "Fire"
 TYPE.WATER:str = "Water"
-TYPE.GRASS:str = "Grass"
 
 # Category
 

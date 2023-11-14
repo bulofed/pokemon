@@ -4,6 +4,6 @@ from src.Const import TYPE
 class GrassType(Type):
     def __init__(self) -> None:
         super().__init__()
-        self.name:TYPE = TYPE.GRASS
-        self.weakness:list[TYPE] = [TYPE.FIRE]
-        self.strength:list[TYPE] = [TYPE.WATER]
+        self.name = TYPE.GRASS
+        self.weakness = [TYPE.FIRE]
+        self.strength = [TYPE.WATER]
