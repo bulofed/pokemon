@@ -3,10 +3,10 @@ from __future__ import annotations
 from src.pokemon.IPokemon import IPokemon
 from src.pokemon.attack.IAttack import IAttack
 from src.pokemon.type.IType import IType
+from src.item.helditem.IHeldItem import IHeldItem
+from src.pokemon.status.IStatus import IStatus
 
 from src.pokemon.stats.Stats import Stats
-from src.item.helditem.HeldItem import HeldItem
-from src.pokemon.status.Status import Status
 
 from src.Const import RELATION, GROUP
 
@@ -27,8 +27,7 @@ class Pokemon(IPokemon):
                  attacks: list[IAttack],
                  stats: Stats = None,
                  isWild: bool = True,
-                 heldItem: HeldItem = None,
-                 status: list[Status] = []):
+                 heldItem: IHeldItem = None):
         self.name = name
         self.specie = specie
         self.hpMax = hpMax
@@ -42,7 +41,7 @@ class Pokemon(IPokemon):
         self.stats = stats if stats is not None else Stats(level)
         self.wild = isWild
         self.heldItem = heldItem
-        self.status = status
+        self.status = []
         
     # Getters
         

@@ -16,3 +16,5 @@ class IAttack(ABC):
     def getStage(self: IAttack) -> int:pass
     @abstractmethod
     def getAccuracy(self: IAttack) -> int:pass
+    @abstractmethod
+    def execute(self: IAttack) -> None:pass

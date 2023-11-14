@@ -29,3 +29,15 @@ class IPokemon(ABC):
     def getAttacks(self: IPokemon) -> list[IAttack]:pass
     @abstractmethod
     def getStats(self: IPokemon) -> Stats:pass
+    @abstractmethod
+    def addHp(self: IPokemon, hp: int) -> None:pass
+    @abstractmethod
+    def addExp(self: IPokemon, exp: int) -> None:pass
+    @abstractmethod
+    def isAlive(self: IPokemon) -> bool:pass
+    @abstractmethod
+    def addAttack(self: IPokemon, attack: IAttack, attackToReplace: IAttack) -> None:pass
+    @abstractmethod
+    def removeAttack(self: IPokemon, attack: IAttack) -> None:pass
+    @abstractmethod
+    def attack(self: IPokemon, attack: IAttack, target: IPokemon) -> None:pass

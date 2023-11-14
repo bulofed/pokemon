@@ -7,3 +7,5 @@ class IHeldItem(Item, ABC):
     def getItemType(self) -> ItemType:pass
     @abstractmethod
     def getEffect(self) -> dict:pass
+    @abstractmethod
+    def use(self) -> None:pass

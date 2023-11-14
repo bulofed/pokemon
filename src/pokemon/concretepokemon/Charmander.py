@@ -7,9 +7,11 @@ from src.Const import GROUP
 
 class Charmander(Pokemon):
     def __init__(self,
-                 name:str = "Charmander",
-                 level:int = 1,
-                 exp:int = 0,
-                 attacks:list = [TackleAttack(), EmberAttack()],
-                 stats:Stats = Stats()):
-        super().__init__(name, "Charmander", 45, level, exp, GROUP.MEDIUM_SLOW, 65, [FireType()], attacks, stats)
+                 name = "Charmander",
+                 level = 1,
+                 exp = 0,
+                 attacks = [TackleAttack(), EmberAttack()],
+                 stats = Stats(),
+                 isWild = True,
+                 heldItem = None):
+        super().__init__(name, "Charmander", 45, level, exp, GROUP.MEDIUM_SLOW, 65, [FireType()], attacks, stats, isWild, heldItem)
