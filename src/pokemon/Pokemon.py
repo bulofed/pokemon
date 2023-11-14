@@ -140,6 +140,8 @@ class Pokemon(IPokemon):
         
         damage = int(((((2*self.level/5)+2)*power*(a/d)/50)+2)*stab*type1*type2*random)
         
+        damage = damage * 2 if critical_hit else damage
+        
         target.addHp(-damage)
         
         print(f'{self.getName()} used {attack.getName()}')
@@ -149,6 +151,8 @@ class Pokemon(IPokemon):
             
         if efficacityMessage:
             print(efficacityMessage)
+            
+        print(f'{target.getName()} took {damage} damage\n')
         
         if not target.isAlive():
             expYielded = gainFormula(target.wild, target.getExpYielded(), target.getLevel())
