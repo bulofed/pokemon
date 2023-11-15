@@ -41,7 +41,7 @@ def expFormula(expGroup: GROUP, level: int, exp: int) -> (int, int):
         ]
     }
     
-    expNeeded = next(threshold[1](level) for threshold in expThresholds[expGroup] if level < threshold[0])
+    expNeeded = floor(next(threshold[1](level) for threshold in expThresholds[expGroup] if level < threshold[0]))
     
     while exp >= expNeeded:
         if level == 100:
@@ -49,9 +49,9 @@ def expFormula(expGroup: GROUP, level: int, exp: int) -> (int, int):
             return level, int(exp)
         level += 1
         exp -= expNeeded
-        expNeeded = next(threshold[1](level) for threshold in expThresholds[expGroup] if level < threshold[0])
+        expNeeded = floor(next(threshold[1](level) for threshold in expThresholds[expGroup] if level < threshold[0]))
     
-    return level, int(exp)
+    return level, floor(exp)
 
 def gainFormula(isWild: bool, expYielded: int, level: int) -> int:
     '''Calculate the exp gained by a pokemon after defeating another pokemon

@@ -1,7 +1,7 @@
 from __future__ import annotations
 from abc import ABC, abstractmethod
-from item.helditem.IHeldItem import IHeldItem
-from pokemon.status.IStatus import IStatus
+from src.item.helditem.IHeldItem import IHeldItem
+from src.pokemon.status.IStatus import IStatus
 from src.pokemon.type.IType import IType
 from src.pokemon.attack.IAttack import IAttack
 from src.pokemon.stats.Stats import Stats
