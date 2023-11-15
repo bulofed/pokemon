@@ -10,7 +10,9 @@ class Bulbasaur(Pokemon):
                  level = 1,
                  exp = 0,
                  attacks = [TackleAttack],
-                 stats = Stats(),
+                 stats = None,
                  isWild = True,
                  heldItem = None):
-        super().__init__(name, "Bulbasaur", 45, level, exp, GROUP.MEDIUM_SLOW, 64, [GrassType()], attacks, stats, isWild, heldItem)
+        if stats is None:
+            stats = Stats(level, 45, 49, 49, 65, 65, 45)
+        super().__init__(name, "Bulbasaur", level, exp, GROUP.MEDIUM_SLOW, 64, [GrassType()], attacks, stats, isWild, heldItem)

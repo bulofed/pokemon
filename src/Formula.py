@@ -1,3 +1,4 @@
+from math import floor
 from src.Const import GROUP
 from src.item.helditem.HeldItem import HeldItem
 from src.pokemon.status.Status import Status
@@ -64,7 +65,7 @@ def gainFormula(isWild: bool, expYielded: int, level: int) -> int:
         int: The exp gained by the pokemon'''
         
     multiplier = 1.5 if not isWild else 1
-    return int(expYielded * level / 7 * multiplier)
+    return floor(expYielded * level / 7 * multiplier)
 
 def criticalFormula(attackStage: int, heldItem: HeldItem, status_list: list[Status]) -> bool:
     '''Calculate if the attack is critical or not
@@ -92,3 +93,17 @@ def criticalFormula(attackStage: int, heldItem: HeldItem, status_list: list[Stat
         chance = 16
     
     return randint(1, chance) == 1
+
+def hpFormula(base: int, ev: int, iv: int, level: int) -> int:
+    '''Calculate the max hp of a pokemon
+    
+    args:
+        base (int): The base hp of the pokemon
+        ev (int): The ev of the pokemon
+        iv (int): The iv of the pokemon
+        level (int): The level of the pokemon
+        
+    returns:
+        int: The max hp of the pokemon'''
+        
+    return floor(0.01 * (2 * base + iv + floor(0.25 * ev)) * level + level + 10)

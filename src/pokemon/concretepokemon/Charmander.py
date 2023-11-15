@@ -11,7 +11,9 @@ class Charmander(Pokemon):
                  level = 1,
                  exp = 0,
                  attacks = [TackleAttack(), EmberAttack()],
-                 stats = Stats(),
+                 stats = None,
                  isWild = True,
                  heldItem = None):
-        super().__init__(name, "Charmander", 45, level, exp, GROUP.MEDIUM_SLOW, 65, [FireType()], attacks, stats, isWild, heldItem)
+        if stats is None:
+            stats = Stats(level, 39, 52, 43, 60, 50, 65)
+        super().__init__(name, "Charmander", level, exp, GROUP.MEDIUM_SLOW, 65, [FireType()], attacks, stats, isWild, heldItem)

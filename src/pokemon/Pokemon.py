@@ -10,7 +10,7 @@ from src.pokemon.stats.Stats import Stats
 
 from src.Const import RELATION, GROUP
 
-from src.Formula import expFormula, gainFormula, criticalFormula
+from src.Formula import expFormula, gainFormula, criticalFormula, hpFormula
 
 from random import randint
 
@@ -18,7 +18,6 @@ class Pokemon(IPokemon):
     def __init__(self,
                  name: str,
                  specie: str,
-                 hpMax: int,
                  level: int,
                  exp: int,
                  expGroup:GROUP,
@@ -31,15 +30,15 @@ class Pokemon(IPokemon):
                  ):
         self.name = name
         self.specie = specie
-        self.hpMax = hpMax
-        self.hp = hpMax
+        self.stats = stats if stats is not None else Stats(level)
+        self.hpMax = hpFormula(self.stats.getBaseHp(), self.stats.getEvHp(), self.stats.getIvHp(), level)
+        self.hp = self.hpMax
         self.level = level
         self.exp = exp
         self.expGroup = expGroup
         self.expYielded = expYielded
         self.types = types
         self.attacks = attacks
-        self.stats = stats if stats is not None else Stats(level)
         self.wild = isWild
         self.heldItem = heldItem
         self.status:list[IStatus] = []
@@ -160,7 +159,7 @@ class Pokemon(IPokemon):
         print(f'{self.getName()} used {attack.getName()}')
         
         if critical_hit:
-            print("Critical hit !\n")
+            print("Critical hit !")
             
         print(efficacityMessage)
             
