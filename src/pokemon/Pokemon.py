@@ -31,7 +31,7 @@ class Pokemon(IPokemon):
         self.name = name
         self.specie = specie
         self.stats = stats if stats is not None else Stats(level)
-        self.hpMax = hpFormula(self.stats.getBaseHp(), self.stats.getEvHp(), self.stats.getIvHp(), level)
+        self.hpMax = hpFormula(self.stats.getBaseStats().get_hp(), self.stats.getEVStats().getHp(), self.stats.getIVStats().getHp(), level)
         self.hp = self.hpMax
         self.level = level
         self.exp = exp
@@ -172,4 +172,3 @@ class Pokemon(IPokemon):
             print(f'{target.getName()} fainted\n{self.getName()} gained {expYielded} exp.\n')
             if self.level > oldLevel:
                 print(f'{self.getName()} grew to level {self.level} !\n')
-                self.stats.printAllEVs()
