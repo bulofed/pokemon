@@ -9,10 +9,10 @@ class Type(IType):
         self.strength:list[TYPE] = []
         
     def getRelation(self, type) -> RELATION:
-        type = type.name
-        if type in self.weakness:
+        Type = type.name
+        if Type in self.weakness:
             return RELATION.WEAK
-        elif type in self.strength:
+        elif Type in self.strength:
             return RELATION.STRONG
         else:
             return RELATION.NEUTRAL

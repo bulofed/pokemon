@@ -1,5 +1,4 @@
 from src.pokemon.status.IStatus import IStatus
-from src.pokemon.status.StatusType import StatusType
 
 class Status(IStatus):
     def __init__(self, name: str, effect: dict, duration: int) -> None:
