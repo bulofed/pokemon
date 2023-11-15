@@ -64,7 +64,7 @@ def gainFormula(isWild: bool, expYielded: int, level: int) -> int:
     returns:
         int: The exp gained by the pokemon'''
         
-    multiplier = 1.5 if not isWild else 1
+    multiplier = 1 if isWild else 1.5
     return floor(expYielded * level / 7 * multiplier)
 
 def criticalFormula(attackStage: int, heldItem: HeldItem, status_list: list[Status]) -> bool:
@@ -80,18 +80,14 @@ def criticalFormula(attackStage: int, heldItem: HeldItem, status_list: list[Stat
         
     itemsOne = ['Scope Lens', 'Razor Claw']
     statusTwo = ['Focus Energy', 'Dire Hit']
-    
+
     if heldItem is not None and heldItem.getName() in itemsOne:
         attackStage += 1
     for status in status_list:
         if status.getName() in statusTwo:
             attackStage += 2
-    
-    if attackStage > 0:
-        chance = max(16 // (2 * attackStage), 2)
-    else:
-        chance = 16
-    
+
+    chance = max(16 // (2 * attackStage), 2) if attackStage > 0 else 16
     return randint(1, chance) == 1
 
 def hpFormula(base: int, ev: int, iv: int, level: int) -> int:

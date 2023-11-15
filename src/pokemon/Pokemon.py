@@ -64,8 +64,7 @@ class Pokemon(IPokemon):
             hp (int): The hp to add'''
             
         self.hp += hp
-        if self.hp > self.hpMax:
-            self.hp = self.hpMax
+        self.hp = min(self.hp, self.hpMax)
         
     def addExp(self, exp: int) -> None:
         '''Add exp to the pokemon and level it up if it has enough exp
@@ -78,6 +77,7 @@ class Pokemon(IPokemon):
         oldLevel = self.level
         newLevel, remainingExp = expFormula(self.expGroup, self.level, exp)
         self.level = newLevel
+        self.stats.level = newLevel
         self.exp = remainingExp
         return oldLevel
         

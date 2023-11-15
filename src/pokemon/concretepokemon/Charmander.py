@@ -7,14 +7,9 @@ from src.pokemon.type.concretetype.FireType import FireType
 from src.Const import GROUP
 
 class Charmander(Pokemon):
-    def __init__(self,
-                 name = "Charmander",
-                 level = 1,
-                 exp = 0,
-                 attacks = [TackleAttack(), EmberAttack()],
-                 stats = None,
-                 isWild = True,
-                 heldItem = None):
+    def __init__(self, name = "Charmander", level = 1, exp = 0, attacks=None, stats = None, isWild = True, heldItem = None):
+        if attacks is None:
+            attacks = [TackleAttack(), EmberAttack()]
         if stats is None:
             stats = Stats(level, BaseStats(39, 52, 43, 60, 50, 65))
         super().__init__(name, "Charmander", level, exp, GROUP.MEDIUM_SLOW, 65, [FireType()], attacks, stats, isWild, heldItem)
