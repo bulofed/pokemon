@@ -56,6 +56,9 @@ class Pokemon(IPokemon):
     def getTypes(self) -> list[IType]:return self.types
     def getAttacks(self) -> list[IAttack]:return self.attacks
     def getStats(self) -> Stats:return self.stats
+    def getHeldItem(self) -> IHeldItem:return self.heldItem
+    def getStatus(self) -> list[IStatus]:return self.status
+    def isWild(self) -> bool:return self.wild
     
     def addHp(self, hp: int) -> None:
         '''Add hp to the pokemon and prevent it from exceeding the max hp

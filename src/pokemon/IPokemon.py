@@ -1,5 +1,7 @@
 from __future__ import annotations
 from abc import ABC, abstractmethod
+from item.helditem.IHeldItem import IHeldItem
+from pokemon.status.IStatus import IStatus
 from src.pokemon.type.IType import IType
 from src.pokemon.attack.IAttack import IAttack
 from src.pokemon.stats.Stats import Stats
@@ -30,6 +32,12 @@ class IPokemon(ABC):
     @abstractmethod
     def getStats(self: IPokemon) -> Stats:pass
     @abstractmethod
+    def getHeldItem(self) -> IHeldItem:return self.heldItem
+    @abstractmethod
+    def getStatus(self) -> list[IStatus]:return self.status
+    @abstractmethod
+    def isWild(self) -> bool:return self.wild
+    @abstractmethod
     def addHp(self: IPokemon, hp: int) -> None:pass
     @abstractmethod
     def addExp(self: IPokemon, exp: int) -> None:pass
@@ -40,4 +48,4 @@ class IPokemon(ABC):
     @abstractmethod
     def removeAttack(self: IPokemon, attack: IAttack) -> None:pass
     @abstractmethod
-    def attack(self: IPokemon, attack: IAttack, target: IPokemon) -> None:pass
+    def attack(self: IPokemon, target: IPokemon, attack: IAttack) -> None:pass
