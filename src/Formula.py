@@ -108,12 +108,12 @@ def statFormula(base: dict[str,int],ev:dict[str,int],iv:dict[str,int],level : in
     '''Calculate the stats lvl up of a pokemon w/ hp
     
     args:
-        base (list[int]): The base stats of the pokemon
-        ev (list[int]): The ev of the pokemon
-        iv (list[int]): The iv of the pokemon
+        base (dict[str,int]): The base stats of the pokemon
+        ev (dict[str,int]): The ev of the pokemon
+        iv (dict[str,int]): The iv of the pokemon
         
     returns:
-        list[int]: The stats of the pokemon'''
+        dict[str,int]: The stats of the pokemon'''
         
     new_stats: dict[str, int] = {
         stat: floor(
