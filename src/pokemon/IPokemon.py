@@ -4,9 +4,11 @@ from src.item.helditem.IHeldItem import IHeldItem
 from src.pokemon.status.IStatus import IStatus
 from src.pokemon.type.IType import IType
 from src.pokemon.attack.IAttack import IAttack
+
 from src.pokemon.stats.Stats import Stats
 
-from src.Const import GROUP, NATURE
+from src.pokemon.exp.CGroup import CGroup
+from src.pokemon.nature.CNature import CNature
 
 class IPokemon(ABC):
     @abstractmethod
@@ -22,7 +24,7 @@ class IPokemon(ABC):
     @abstractmethod
     def getExp(self: IPokemon) -> int:pass
     @abstractmethod
-    def getExpGroup(self: IPokemon) -> GROUP:pass
+    def getExpGroup(self: IPokemon) -> CGroup:pass
     @abstractmethod
     def getExpYielded(self: IPokemon) -> int:pass
     @abstractmethod
@@ -30,7 +32,7 @@ class IPokemon(ABC):
     @abstractmethod
     def getAttacks(self: IPokemon) -> list[IAttack]:pass
     @abstractmethod
-    def getNature(self: IPokemon) -> NATURE:pass
+    def getNature(self: IPokemon) -> CNature:pass
     @abstractmethod
     def getStats(self: IPokemon) -> Stats:pass
     @abstractmethod

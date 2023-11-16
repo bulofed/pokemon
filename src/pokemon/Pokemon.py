@@ -8,8 +8,8 @@ from src.pokemon.status.IStatus import IStatus
 
 from src.pokemon.stats.Stats import Stats
 from src.pokemon.type.CRelation import CRelation
-
-from src.Const import GROUP, NATURE
+from src.pokemon.exp.CGroup import CGroup
+from src.pokemon.nature.CNature import CNature
 
 from src.Formula import expFormula, gainFormula, criticalFormula, hpFormula,statFormula
 
@@ -21,10 +21,10 @@ class Pokemon(IPokemon):
                  specie: str,
                  level: int,
                  exp: int,
-                 expGroup:GROUP,
+                 expGroup:CGroup,
                  expYielded:int,
                  types: list[IType],
-                 nature: NATURE,
+                 nature: CNature,
                  attacks: list[IAttack],
                  stats: Stats = None,
                  isWild: bool = True,
@@ -54,10 +54,10 @@ class Pokemon(IPokemon):
     def getHp(self) -> int:return self.hp
     def getLevel(self) -> int:return self.level
     def getExp(self) -> int:return self.exp
-    def getExpGroup(self: IPokemon) -> GROUP:return self.expGroup
+    def getExpGroup(self: IPokemon) -> CGroup:return self.expGroup
     def getExpYielded(self: IPokemon) -> int:return self.expYielded
     def getTypes(self) -> list[IType]:return self.types
-    def getNature(self) -> NATURE:return self.nature
+    def getNature(self) -> CNature:return self.nature
     def getAttacks(self) -> list[IAttack]:return self.attacks
     def getStats(self) -> Stats:return self.stats
     def getHeldItem(self) -> IHeldItem:return self.heldItem

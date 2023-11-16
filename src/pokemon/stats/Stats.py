@@ -1,6 +1,8 @@
 from __future__ import annotations
 
-from src.Const import CATEGORY, STATS, NATURE
+from src.pokemon.stats.CStats import CStats
+from src.pokemon.nature.CNature import CNature
+from src.pokemon.attack.CCategory import CCategory
 from src.pokemon.stats.BaseStats import BaseStats
 from src.pokemon.stats.IVStats import IVStats
 from src.pokemon.stats.EVStats import EVStats
@@ -10,7 +12,7 @@ class Stats():
     
     def __init__(self: Stats,
                  level: int,
-                 nature: NATURE,
+                 nature: CNature,
                  base_stats: BaseStats,
                  iv_stats: IVStats = IVStats(),
                  ev_stats: EVStats = EVStats()
@@ -28,7 +30,7 @@ class Stats():
     def getEVStats(self: Stats) -> EVStats:return self.ev_stats
     def getStats(self: Stats) -> dict[str,int]:return self.stats
     
-    def getDefense(self, category: CATEGORY) -> int:
+    def getDefense(self, category: CCategory) -> int:
         """
         Returns the defense value based on the given category.
 
@@ -38,14 +40,14 @@ class Stats():
         Returns:
             int: The defense value corresponding to the category. Returns 0 if the category is not recognized.
         """
-        if category == CATEGORY.PHYSICAL:
-            return self.stats[STATS.DEFENSE]
-        elif category == CATEGORY.SPECIAL:
-            return self.stats[STATS.SPECIAL_DEFENSE]
+        if category == CCategory.PHYSICAL:
+            return self.stats[CStats.DEFENSE]
+        elif category == CCategory.SPECIAL:
+            return self.stats[CStats.SPECIAL_DEFENSE]
         else:
             return 0
         
-    def getAttack(self, category: CATEGORY) -> int:
+    def getAttack(self, category: CCategory) -> int:
         """
         Returns the attack value based on the given category.
 
@@ -55,10 +57,10 @@ class Stats():
         Returns:
             int: The attack value corresponding to the category. Returns 0 if the category is not recognized.
         """
-        if category == CATEGORY.PHYSICAL:
-            return self.stats[STATS.ATTACK]
-        elif category == CATEGORY.SPECIAL:
-            return self.stats[STATS.SPECIAL_ATTACK]
+        if category == CCategory.PHYSICAL:
+            return self.stats[CStats.ATTACK]
+        elif category == CCategory.SPECIAL:
+            return self.stats[CStats.SPECIAL_ATTACK]
         else:
             return 0
     

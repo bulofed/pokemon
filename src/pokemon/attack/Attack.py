@@ -1,5 +1,5 @@
 from src.pokemon.attack.IAttack import IAttack
-from src.Const import CATEGORY
+from src.pokemon.attack.CCategory import CCategory
 from src.pokemon.type.IType import IType
 from src.pokemon.type.concretetype.NormalType import NormalType
 
@@ -9,7 +9,7 @@ class Attack(IAttack):
         self.name:str = ""
         self.power:int = 0
         self.type:IType = NormalType()
-        self.category:CATEGORY = CATEGORY.NONE
+        self.category:CCategory = CCategory.NONE
         self.precision:int = 0
         self.pp:int = 0
         self.max_pp:int = 0
@@ -19,7 +19,7 @@ class Attack(IAttack):
         
     def getName(self) -> str:return self.name
     def getPower(self) -> int:return self.power
-    def getCategory(self) -> CATEGORY:return self.category
+    def getCategory(self) -> CCategory:return self.category
     def getType(self) -> IType:return self.type
     def getStage(self) -> int:return self.stage
     def getAccuracy(self) -> int:return self.precision

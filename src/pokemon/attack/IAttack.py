@@ -1,6 +1,6 @@
 from __future__ import annotations
 from abc import ABC, abstractmethod
-from src.Const import CATEGORY
+from src.pokemon.attack.CCategory import CCategory
 from src.pokemon.type.IType import IType
 
 class IAttack(ABC):
@@ -9,7 +9,7 @@ class IAttack(ABC):
     @abstractmethod
     def getPower(self: IAttack) -> int:pass
     @abstractmethod
-    def getCategory(self: IAttack) -> CATEGORY:pass
+    def getCategory(self: IAttack) -> CCategory:pass
     @abstractmethod
     def getType(self: IAttack) -> IType:pass
     @abstractmethod

@@ -2,8 +2,9 @@ from src.pokemon.Pokemon import Pokemon
 from src.pokemon.attack.concreteattack.TackleAttack import TackleAttack
 from src.pokemon.stats.Stats import Stats
 from src.pokemon.stats.BaseStats import BaseStats
-from src.Const import GROUP, NATURE, NATURE_LIST
+from src.Const import NATURE_LIST
 from src.pokemon.type.concretetype.GrassType import GrassType
+from src.pokemon.exp.CGroup import CGroup
 from random import choice
 
 class Bulbasaur(Pokemon):
@@ -22,4 +23,4 @@ class Bulbasaur(Pokemon):
             nature = choice(NATURE_LIST)
         if stats is None:
             stats = Stats(level, nature, BaseStats(45, 49, 49, 65, 65, 45))
-        super().__init__(name, "Bulbasaur", level, exp, GROUP.MEDIUM_SLOW, 64, [GrassType()], nature, attacks, stats, isWild, heldItem)
+        super().__init__(name, "Bulbasaur", level, exp, CGroup.MEDIUM_SLOW, 64, [GrassType()], nature, attacks, stats, isWild, heldItem)

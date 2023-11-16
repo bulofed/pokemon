@@ -1,10 +1,13 @@
 from math import floor
-from src.Const import GROUP, STATS, NATURE, NATURE_TABLE
+from src.Const import NATURE_TABLE
+from src.pokemon.stats.CStats import CStats
+from src.pokemon.nature.CNature import CNature
+from src.pokemon.exp.CGroup import CGroup
 from src.item.helditem.IHeldItem import IHeldItem
 from src.pokemon.status.IStatus import IStatus
 from random import randint
 
-def expFormula(expGroup: GROUP, level: int, exp: int) -> (int, int):
+def expFormula(expGroup: CGroup, level: int, exp: int) -> (int, int):
     '''Calculate the level and the remaining exp of a pokemon after gaining exp
     
     args:
@@ -108,7 +111,7 @@ def statFormula(base: dict[str,int],
                 ev:dict[str,int],
                 iv:dict[str,int],
                 level: int,
-                nature: NATURE) -> dict[str,int]:
+                nature: CNature) -> dict[str,int]:
     '''Calculate the stats lvl up of a pokemon w/ hp
     
     args:
@@ -127,7 +130,7 @@ def statFormula(base: dict[str,int],
             )
             * NATURE_TABLE[nature][stat]
         )
-        if stat != STATS.HP
+        if stat != CStats.HP
         else hpFormula(base[stat], ev[stat], iv[stat], level)
         for stat in base
     }

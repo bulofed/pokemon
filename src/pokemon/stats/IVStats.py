@@ -1,6 +1,6 @@
 from random import randint
 
-from src.Const import STATS
+from src.pokemon.stats.CStats import CStats
 
 class IVStats:
     def __init__(self,
@@ -24,10 +24,10 @@ class IVStats:
     def getSpecialAttack(self):return self.special_attack
     def getSpecialDefense(self):return self.special_defense
     def getSpeed(self):return self.speed
-    def getStats(self):return { STATS.HP : self.hp,
-                                STATS.ATTACK : self.attack,
-                                STATS.SPECIAL_ATTACK : self.special_attack,
-                                STATS.DEFENSE : self.defense,
-                                STATS.SPECIAL_DEFENSE : self.special_defense,
-                                STATS.SPEED : self.speed
+    def getStats(self):return { CStats.HP : self.hp,
+                                CStats.ATTACK : self.attack,
+                                CStats.SPECIAL_ATTACK : self.special_attack,
+                                CStats.DEFENSE : self.defense,
+                                CStats.SPECIAL_DEFENSE : self.special_defense,
+                                CStats.SPEED : self.speed
                                 }
