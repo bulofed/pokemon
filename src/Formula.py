@@ -115,13 +115,18 @@ def statFormula(base: dict[str,int],ev:dict[str,int],iv:dict[str,int],level : in
     returns:
         list[int]: The stats of the pokemon'''
         
-    new_stats : dict[str, int] = {}
-    for stat in base:
-        if stat != "HP":
-            new_stats[stat] = floor((((2 * base[stat] + iv[stat] + (ev[stat] // 4) * level) // 100) + 5 ) * nature)
-        else:
-            new_stats[stat] = hpFormula(base[stat], ev[stat], iv[stat], level)
-
+    new_stats: dict[str, int] = {
+        stat: floor(
+            (
+                ((2 * base[stat] + iv[stat] + (ev[stat] // 4) * level) // 100)
+                + 5
+            )
+            * nature
+        )
+        if stat != "HP"
+        else hpFormula(base[stat], ev[stat], iv[stat], level)
+        for stat in base
+    }
     return new_stats
 
     
