@@ -1,19 +1,20 @@
 from __future__ import annotations
 
 from src.pokemon.IPokemon import IPokemon
-from src.pokemon.attack.IAttack import IAttack
-from src.pokemon.type.IType import IType
+from src.pokemon.elements.attack.IAttack import IAttack
+from src.pokemon.elements.type.IType import IType
 from src.item.helditem.IHeldItem import IHeldItem
-from src.pokemon.status.IStatus import IStatus
+from src.pokemon.elements.status.IStatus import IStatus
 
-from src.pokemon.stats.Stats import Stats
-from src.pokemon.type.CRelation import CRelation
-from src.pokemon.exp.CGroup import CGroup
-from src.pokemon.nature.CNature import CNature
+from src.pokemon.elements.stats.Stats import Stats
+from src.pokemon.elements.type.CRelation import CRelation
+from src.pokemon.elements.exp.CGroup import CGroup
+from src.pokemon.elements.nature.CNature import CNature
 
-from src.Formula import expFormula, gainFormula, criticalFormula, hpFormula,statFormula
+from src.Formula import expFormula, gainFormula, criticalFormula, hpFormula, statFormula
 
 from random import randint
+
 
 class Pokemon(IPokemon):
     def __init__(self,
@@ -21,8 +22,8 @@ class Pokemon(IPokemon):
                  specie: str,
                  level: int,
                  exp: int,
-                 expGroup:CGroup,
-                 expYielded:int,
+                 expGroup: CGroup,
+                 expYielded: int,
                  types: list[IType],
                  nature: CNature,
                  attacks: list[IAttack],
@@ -33,7 +34,8 @@ class Pokemon(IPokemon):
         self.name = name
         self.specie = specie
         self.stats = stats if stats is not None else Stats(level, nature)
-        self.hpMax = hpFormula(self.stats.getBaseStats().getHp(), self.stats.getEVStats().getHp(), self.stats.getIVStats().getHp(), level)
+        self.hpMax = hpFormula(self.stats.getBaseStats().getHp(
+        ), self.stats.getEVStats().getHp(), self.stats.getIVStats().getHp(), level)
         self.hp = self.hpMax
         self.level = level
         self.exp = exp
@@ -44,41 +46,41 @@ class Pokemon(IPokemon):
         self.attacks = attacks
         self.wild = isWild
         self.heldItem = heldItem
-        self.status:list[IStatus] = []
-        
+        self.status: list[IStatus] = []
+
     # Getters
-        
-    def getName(self) -> str:return self.name
-    def getSpecie(self) -> str:return self.specie
-    def getHpMax(self) -> int:return self.hpMax
-    def getHp(self) -> int:return self.hp
-    def getLevel(self) -> int:return self.level
-    def getExp(self) -> int:return self.exp
-    def getExpGroup(self: IPokemon) -> CGroup:return self.expGroup
-    def getExpYielded(self: IPokemon) -> int:return self.expYielded
-    def getTypes(self) -> list[IType]:return self.types
-    def getNature(self) -> CNature:return self.nature
-    def getAttacks(self) -> list[IAttack]:return self.attacks
-    def getStats(self) -> Stats:return self.stats
-    def getHeldItem(self) -> IHeldItem:return self.heldItem
-    def getStatus(self) -> list[IStatus]:return self.status
-    def isWild(self) -> bool:return self.wild
-    
+
+    def getName(self) -> str: return self.name
+    def getSpecie(self) -> str: return self.specie
+    def getHpMax(self) -> int: return self.hpMax
+    def getHp(self) -> int: return self.hp
+    def getLevel(self) -> int: return self.level
+    def getExp(self) -> int: return self.exp
+    def getExpGroup(self: IPokemon) -> CGroup: return self.expGroup
+    def getExpYielded(self: IPokemon) -> int: return self.expYielded
+    def getTypes(self) -> list[IType]: return self.types
+    def getNature(self) -> CNature: return self.nature
+    def getAttacks(self) -> list[IAttack]: return self.attacks
+    def getStats(self) -> Stats: return self.stats
+    def getHeldItem(self) -> IHeldItem: return self.heldItem
+    def getStatus(self) -> list[IStatus]: return self.status
+    def isWild(self) -> bool: return self.wild
+
     def addHp(self, hp: int) -> None:
         '''Add hp to the pokemon and prevent it from exceeding the max hp
-        
+
         args:
             hp (int): The hp to add'''
-            
+
         self.hp += hp
         self.hp = min(self.hp, self.hpMax)
-        
+
     def addExp(self, exp: int) -> None:
         '''Add exp to the pokemon and level it up if it has enough exp
-        
+
         args:
             exp (int): The exp to add'''
-        
+
         if self.level == 100:
             return self.level
         oldLevel = self.level
@@ -87,34 +89,34 @@ class Pokemon(IPokemon):
         self.stats.level = newLevel
         self.exp = remainingExp
         return oldLevel
-        
+
     def isAlive(self) -> bool:
         '''Return True if the pokemon is alive, False otherwise'''
-        
+
         return self.hp > 0
 
     def addAttack(self, attack: IAttack, attackToReplace: IAttack = None) -> None:
         '''Add an attack to the pokemon and remove the attackToReplace if it is not None
-        
+
         args:
             attack (IAttack): The attack to add
             attackToReplace (IAttack): The attack to remove'''
-            
+
         self.attacks.append(attack)
         if attackToReplace is not None:
             self.attacks.remove(attackToReplace)
-            
+
     def removeAttack(self, attack: IAttack) -> None:
         '''Remove an attack from the pokemon
-        
+
         args:
             attack (IAttack): The attack to remove'''
-            
+
         self.attacks.remove(attack)
-        
+
     def attack(self, target: Pokemon, attack: IAttack) -> None:
         '''Attack the target with the attack
-        
+
         args:
             target (Pokemon): The pokemon to attack
             attack (IAttack): The attack to use'''
@@ -124,7 +126,8 @@ class Pokemon(IPokemon):
         a = self.stats.getAttack(attack.getCategory())
         d = target.stats.getDefense(attack.getCategory())
         stab = self.calculateStabMultiplier(attack)
-        critical_hit = criticalFormula(attack.getStage(), self.heldItem, self.status)
+        critical_hit = criticalFormula(
+            attack.getStage(), self.heldItem, self.status)
         type_multipliers = self.calculateTypeMultipliers(attack, target.types)
 
         type1, type2 = type_multipliers[:2] + [1] * (2 - len(type_multipliers))
@@ -134,9 +137,11 @@ class Pokemon(IPokemon):
 
         random_factor = self.calculateRandomFactor()
 
-        damage = self.calculateDamage(power, a, d, stab, multiplier, random_factor, critical_hit)
-        
-        self.inflictDamage(target, damage, attack, critical_hit, efficacityMessage)
+        damage = self.calculateDamage(
+            power, a, d, stab, multiplier, random_factor, critical_hit)
+
+        self.inflictDamage(target, damage, attack,
+                           critical_hit, efficacityMessage)
 
     def consumePP(self, attack: IAttack) -> None:
         '''Reduce PP of the attack'''
@@ -145,7 +150,7 @@ class Pokemon(IPokemon):
     def calculateStabMultiplier(self, attack: IAttack) -> float:
         '''Calculate STAB multiplier'''
         return 1.5 if attack.getType() in self.types else 1
-        
+
     def calculateTypeMultipliers(self, attack: IAttack, target_types: list[str]) -> list[float]:
         '''Calculate type multipliers'''
         type_multipliers = []
@@ -204,9 +209,11 @@ class Pokemon(IPokemon):
 
     def handleFaintedTarget(self, target: Pokemon) -> None:
         '''Handle actions when the target faints'''
-        expYielded = gainFormula(target.wild, target.getExpYielded(), target.getLevel())
+        expYielded = gainFormula(
+            target.wild, target.getExpYielded(), target.getLevel())
         oldLevel = self.addExp(expYielded)
-        print(f'{target.getName()} fainted\n{self.getName()} gained {expYielded} exp.\n')
+        print(
+            f'{target.getName()} fainted\n{self.getName()} gained {expYielded} exp.\n')
         if self.level > oldLevel:
             self.levelUp(target)
 

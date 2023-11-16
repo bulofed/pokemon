@@ -1,5 +1,5 @@
-from src.pokemon.stats.CStats import CStats
-from src.pokemon.nature.CNature import CNature
+from src.pokemon.elements.stats.CStats import CStats
+from src.pokemon.elements.nature.CNature import CNature
 
 NATURE_LIST = [getattr(CNature, attr) for attr in dir(CNature) if not callable(
     getattr(CNature, attr)) and not attr.startswith("__")]
