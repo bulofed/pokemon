@@ -1,8 +1,8 @@
 from __future__ import annotations
 from abc import ABC, abstractmethod
-from src.Const import TYPE
+from src.pokemon.type.CType import CType
 
 class IType(ABC):
     @abstractmethod
-    def getRelation(self: IType, type: TYPE) -> bool:
+    def getRelation(self: IType, type: CType) -> bool:
         pass

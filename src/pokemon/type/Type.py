@@ -1,12 +1,13 @@
 from src.pokemon.type.IType import IType
-from src.Const import RELATION, TYPE
+from src.pokemon.type.CType import CType
+from src.Const import RELATION
 
 class Type(IType):
     def __init__(self, name:str = "") -> None:
         super().__init__()
-        self.name:TYPE = name
-        self.weakness:list[TYPE] = []
-        self.strength:list[TYPE] = []
+        self.name:CType = name
+        self.weakness:list[CType] = []
+        self.strength:list[CType] = []
         
     def getRelation(self, type) -> RELATION:
         Type = type.name

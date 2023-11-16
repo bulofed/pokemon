@@ -7,15 +7,6 @@ RELATION.NEUTRAL:str = "neutral"
 RELATION.STRONG:str = "strong"
 RELATION.IMMUNE:str = "immune"
 
-# Type
-
-TYPE = type("TYPE", (), {})
-
-TYPE.NORMAL:str = "Normal"
-TYPE.GRASS:str = "Grass"
-TYPE.FIRE:str = "Fire"
-TYPE.WATER:str = "Water"
-
 # Category
 
 CATEGORY = type("CATEGORY", (), {})
