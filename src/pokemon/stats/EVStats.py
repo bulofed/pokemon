@@ -20,3 +20,9 @@ class EVStats:
     def getSpecialAttack(self):return self.special_attack
     def getSpecialDefense(self):return self.special_defense
     def getSpeed(self):return self.speed
+    def getStats(self):return {"HP" : self.hp,
+                                 "ATK" : self.attack,
+                                  "SP.ATK" : self.special_attack,
+                                  "DEF" : self.defense,
+                                  "SP.DEF" : self.special_defense,
+                                  "SPD" : self.speed }

@@ -103,3 +103,25 @@ def hpFormula(base: int, ev: int, iv: int, level: int) -> int:
         int: The max hp of the pokemon'''
         
     return floor(0.01 * (2 * base + iv + floor(0.25 * ev)) * level + level + 10)
+
+def statFormula(base: dict[str,int],ev:dict[str,int],iv:dict[str,int],level : int,nature : int = 1) -> dict[str,int]:
+    '''Calculate the stats lvl up of a pokemon w/ hp
+    
+    args:
+        base (list[int]): The base stats of the pokemon
+        ev (list[int]): The ev of the pokemon
+        iv (list[int]): The iv of the pokemon
+        
+    returns:
+        list[int]: The stats of the pokemon'''
+        
+    new_stats : dict[str, int] = {}
+    for stat in base:
+        if stat != "HP":
+            new_stats[stat] = floor((((2 * base[stat] + iv[stat] + (ev[stat] // 4) * level) // 100) + 5 ) * nature)
+        else:
+            new_stats[stat] = hpFormula(base[stat], ev[stat], iv[stat], level)
+
+    return new_stats
+
+    

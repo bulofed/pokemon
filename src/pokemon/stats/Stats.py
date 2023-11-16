@@ -4,6 +4,7 @@ from src.Const import CATEGORY
 from src.pokemon.stats.BaseStats import BaseStats
 from src.pokemon.stats.IVStats import IVStats
 from src.pokemon.stats.EVStats import EVStats
+from src.Formula import statFormula
 
 class Stats():
     
@@ -17,11 +18,13 @@ class Stats():
         self.base_stats = base_stats
         self.iv_stats = iv_stats
         self.ev_stats = ev_stats
+        self.stats = statFormula(self.base_stats.getStats(), self.ev_stats.getStats(), self.iv_stats.getStats(), self.level)
         
     def getLevel(self: Stats) -> int:return self.level
     def getBaseStats(self: Stats) -> BaseStats:return self.base_stats
     def getIVStats(self: Stats) -> IVStats:return self.iv_stats
     def getEVStats(self: Stats) -> EVStats:return self.ev_stats
+    def getStats(self: Stats) -> dict[str,int]:return self.stats
     
     def getDefense(self, category: CATEGORY) -> int:
         """
@@ -92,3 +95,6 @@ class Stats():
             int: The calculated special attack value based on the Stats object's attributes.
         """
         return int((2 * self.base_stats.special_attack + self.iv_stats.special_attack + self.ev_stats.special_attack / 4) * self.level / 100 + 5)
+    
+    def setStats (self,stats : dict[str,int]) -> None:
+        self.stats = stats

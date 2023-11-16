@@ -10,7 +10,7 @@ from src.pokemon.stats.Stats import Stats
 
 from src.Const import RELATION, GROUP
 
-from src.Formula import expFormula, gainFormula, criticalFormula, hpFormula
+from src.Formula import expFormula, gainFormula, criticalFormula, hpFormula,statFormula
 
 from random import randint
 
@@ -175,3 +175,6 @@ class Pokemon(IPokemon):
             print(f'{target.getName()} fainted\n{self.getName()} gained {expYielded} exp.\n')
             if self.level > oldLevel:
                 print(f'{self.getName()} grew to level {self.level} !\n')
+                new_stat : dict[str,int] = statFormula(self.stats.getBaseStats().getStats(),self.stats.getEVStats().getStats(),self.stats.getIVStats().getStats(),self.level)
+                self.stats.setStats(new_stat)
+                
