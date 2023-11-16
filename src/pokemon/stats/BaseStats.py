@@ -1,3 +1,5 @@
+from src.Const import STATS
+
 class BaseStats:
     def __init__(self, hp, attack, defense, special_attack, special_defense, speed):
         self.hp = hp
@@ -19,9 +21,10 @@ class BaseStats:
     def getSpecialAttack(self):return self.special_attack
     def getSpecialDefense(self):return self.special_defense
     def getSpeed(self):return self.speed
-    def getStats(self):return { "HP" : self.hp,
-                                "ATK" : self.attack,
-                                "SP.ATK" : self.special_attack,
-                                "DEF" : self.defense,
-                                "SP.DEF" : self.special_defense,
-                                "SPD" : self.speed }
+    def getStats(self):return { STATS.HP : self.hp,
+                                STATS.ATTACK : self.attack,
+                                STATS.SPECIAL_ATTACK : self.special_attack,
+                                STATS.DEFENSE : self.defense,
+                                STATS.SPECIAL_DEFENSE : self.special_defense,
+                                STATS.SPEED : self.speed
+                                }

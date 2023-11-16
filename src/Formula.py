@@ -1,5 +1,5 @@
 from math import floor
-from src.Const import GROUP
+from src.Const import GROUP, STATS
 from src.item.helditem.HeldItem import HeldItem
 from src.pokemon.status.Status import Status
 from random import randint
@@ -123,7 +123,7 @@ def statFormula(base: dict[str,int],ev:dict[str,int],iv:dict[str,int],level : in
             )
             * nature
         )
-        if stat != "HP"
+        if stat != STATS.HP
         else hpFormula(base[stat], ev[stat], iv[stat], level)
         for stat in base
     }

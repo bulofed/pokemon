@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from src.Const import CATEGORY
+from src.Const import CATEGORY, STATS
 from src.pokemon.stats.BaseStats import BaseStats
 from src.pokemon.stats.IVStats import IVStats
 from src.pokemon.stats.EVStats import EVStats
@@ -37,9 +37,9 @@ class Stats():
             int: The defense value corresponding to the category. Returns 0 if the category is not recognized.
         """
         if category == CATEGORY.PHYSICAL:
-            return self.stats["DEF"]
+            return self.stats[STATS.DEFENSE]
         elif category == CATEGORY.SPECIAL:
-            return self.stats["SP.DEF"]
+            return self.stats[STATS.SPECIAL_DEFENSE]
         else:
             return 0
         
@@ -54,9 +54,9 @@ class Stats():
             int: The attack value corresponding to the category. Returns 0 if the category is not recognized.
         """
         if category == CATEGORY.PHYSICAL:
-            return self.stats["ATK"]
+            return self.stats[STATS.ATTACK]
         elif category == CATEGORY.SPECIAL:
-            return self.stats["SP.ATK"]
+            return self.stats[STATS.SPECIAL_ATTACK]
         else:
             return 0
     
