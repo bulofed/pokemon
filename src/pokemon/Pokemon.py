@@ -114,66 +114,109 @@ class Pokemon(IPokemon):
         args:
             target (Pokemon): The pokemon to attack
             attack (IAttack): The attack to use'''
-        
-        attack.execute() # Remove 1 PP
 
+        self.consumePP(attack)
         power = attack.getPower()
         a = self.stats.getAttack(attack.getCategory())
         d = target.stats.getDefense(attack.getCategory())
-        stab = 1.5 if attack.getType() in self.types else 1
-        critical_hit = criticalFormula(attack.getStage(), self.heldItem, self.status)
-        type_multipliers = []
-
-        for target_type in target.types:
-
-            relation = attack.getType().getRelation(target_type)
-
-            if relation == RELATION.STRONG:
-                type_multipliers.append(2)
-            elif relation == RELATION.WEAK:
-                type_multipliers.append(0.5)
-            elif relation == RELATION.IMMUNE:
-                type_multipliers.append(0)
-            else:
-                type_multipliers.append(1)
+        stab = self.calculateStabMultiplier(attack)
+        critical_hit = self.calculateCriticalHit(attack)
+        type_multipliers = self.calculateTypeMultipliers(attack, target.types)
 
         type1, type2 = type_multipliers[:2] + [1] * (2 - len(type_multipliers))
+        multiplier = self.calculateTotalMultiplier(type1, type2)
 
-        multiplier = type1 * type2 if type2 is not None else type1
+        efficacityMessage = self.calculateEfficacityMessage(multiplier, target)
 
-        if multiplier == 0:
-            efficacityMessage = f"It doesn't affect {target.getName()}"
-        elif multiplier in [0.25, 0.5]:
-            efficacityMessage = "It's not very effective..."
-        elif multiplier in [2, 4]:
-            efficacityMessage = "It's super effective !"
+        random_factor = self.calculateRandomFactor()
+
+        damage = self.calculateDamage(power, a, d, stab, multiplier, random_factor, critical_hit)
+        
+        self.inflictDamage(target, damage, attack, critical_hit, efficacityMessage)
+
+    def consumePP(self, attack: IAttack) -> None:
+        '''Reduce PP of the attack'''
+        attack.execute()
+
+    def calculateStabMultiplier(self, attack: IAttack) -> float:
+        '''Calculate STAB multiplier'''
+        return 1.5 if attack.getType() in self.types else 1
+
+    def calculateCriticalHit(self, attack: IAttack) -> bool:
+        '''Calculate if the attack is a critical hit'''
+        return criticalFormula(attack.getStage(), self.heldItem, self.status)
+
+    def calculateTypeMultipliers(self, attack: IAttack, target_types: list[str]) -> list[float]:
+        '''Calculate type multipliers'''
+        type_multipliers = []
+        for target_type in target_types:
+            relation = attack.getType().getRelation(target_type)
+            type_multipliers.append(self.calculateTypeMultiplier(relation))
+        return type_multipliers
+
+    def calculateTypeMultiplier(self, relation: RELATION) -> float:
+        '''Calculate individual type multiplier'''
+        if relation == RELATION.STRONG:
+            return 2
+        elif relation == RELATION.WEAK:
+            return 0.5
+        elif relation == RELATION.IMMUNE:
+            return 0
         else:
-            efficacityMessage = ""
+            return 1
 
-        random = (randint(85, 100)/100)
+    def calculateTotalMultiplier(self, type1: float, type2: float) -> float:
+        '''Calculate total type multiplier'''
+        return type1 * type2 if type2 is not None else type1
 
-        damage = int(((((2*self.level/5)+2)*power*(a/d)/50)+2)*stab*type1*type2*random)
+    def calculateEfficacityMessage(self, multiplier: float, target: Pokemon) -> str:
+        '''Calculate the efficacy message based on multiplier'''
+        if multiplier == 0:
+            return f"It doesn't affect {target.getName()}"
+        elif multiplier in {0.25, 0.5}:
+            return "It's not very effective..."
+        elif multiplier in {2, 4}:
+            return "It's super effective !"
+        else:
+            return ""
 
-        damage = damage * 2 if critical_hit else damage
+    def calculateRandomFactor(self) -> float:
+        '''Calculate a random factor for damage'''
+        return randint(85, 100) / 100
 
+    def calculateDamage(self, power: int, a: int, d: int, stab: float, multiplier: float, random_factor: float, critical_hit: bool) -> int:
+        '''Calculate the damage inflicted'''
+        base_damage = (((2 * self.level / 5) + 2) * power * (a / d) / 50) + 2
+        damage = int(base_damage * stab * multiplier * random_factor)
+        return damage * 2 if critical_hit else damage
+
+    def inflictDamage(self, target: Pokemon, damage: int, attack: IAttack, critical_hit: bool, efficacityMessage: str) -> None:
+        '''Inflict damage to the target and print the results'''
         target.addHp(-damage)
-
         print(f'{self.getName()} used {attack.getName()}')
-
         if critical_hit:
             print("Critical hit !")
-
         print(efficacityMessage)
-
         if damage > 0:
             print(f'{target.getName()} took {damage} damage\n')
-
         if not target.isAlive():
-            expYielded = gainFormula(target.wild, target.getExpYielded(), target.getLevel())
-            oldLevel = self.addExp(expYielded)
-            print(f'{target.getName()} fainted\n{self.getName()} gained {expYielded} exp.\n')
-            if self.level > oldLevel:
-                print(f'{self.getName()} grew to level {self.level} !\n')
-                new_stat : dict[str,int] = statFormula(self.stats.getBaseStats().getStats(),self.stats.getEVStats().getStats(),self.stats.getIVStats().getStats(),self.level)
-                self.stats.setStats(new_stat)
-                
+            self.handleFaintedTarget(target)
+
+    def handleFaintedTarget(self, target: Pokemon) -> None:
+        '''Handle actions when the target faints'''
+        expYielded = gainFormula(target.wild, target.getExpYielded(), target.getLevel())
+        oldLevel = self.addExp(expYielded)
+        print(f'{target.getName()} fainted\n{self.getName()} gained {expYielded} exp.\n')
+        if self.level > oldLevel:
+            self.levelUp(target)
+
+    def levelUp(self, target: Pokemon) -> None:
+        '''Handle actions when the attacker levels up'''
+        print(f'{self.getName()} grew to level {self.level} !\n')
+        new_stat: dict[str, int] = statFormula(
+            self.stats.getBaseStats().getStats(),
+            self.stats.getEVStats().getStats(),
+            self.stats.getIVStats().getStats(),
+            self.level
+        )
+        self.stats.setStats(new_stat)
