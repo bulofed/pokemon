@@ -1,5 +1,4 @@
 from __future__ import annotations
-from math import floor
 
 from src.Const import CATEGORY
 from src.pokemon.stats.BaseStats import BaseStats
@@ -38,29 +37,11 @@ class Stats():
             int: The defense value corresponding to the category. Returns 0 if the category is not recognized.
         """
         if category == CATEGORY.PHYSICAL:
-            return self.getDefensePhysical()
+            return self.stats["DEF"]
         elif category == CATEGORY.SPECIAL:
-            return self.getDefenseSpecial()
+            return self.stats["SP.DEF"]
         else:
             return 0
-        
-    def getDefensePhysical(self: Stats) -> int:
-        """
-        Returns the physical defense value of the Stats object.
-
-        Returns:
-            int: The calculated physical defense value based on the Stats object's attributes.
-        """
-        return floor((2 * self.base_stats.defense + self.iv_stats.defense + self.ev_stats.defense / 4) * self.level / 100 + 5)
-    
-    def getDefenseSpecial(self: Stats) -> int:
-        """
-        Returns the special defense value of the Stats object.
-
-        Returns:
-            int: The calculated special defense value based on the Stats object's attributes.
-        """
-        return floor((2 * self.base_stats.special_defense + self.iv_stats.special_defense + self.ev_stats.special_defense / 4) * self.level / 100 + 5)
         
     def getAttack(self, category: CATEGORY) -> int:
         """
@@ -73,29 +54,11 @@ class Stats():
             int: The attack value corresponding to the category. Returns 0 if the category is not recognized.
         """
         if category == CATEGORY.PHYSICAL:
-            return self.getAttackPhysical()
+            return self.stats["ATK"]
         elif category == CATEGORY.SPECIAL:
-            return self.getAttackSpecial()
+            return self.stats["SP.ATK"]
         else:
             return 0
-        
-    def getAttackPhysical(self: Stats) -> int:
-        """
-        Returns the physical attack value of the Stats object.
-
-        Returns:
-            int: The calculated physical attack value based on the Stats object's attributes.
-        """
-        return floor((2 * self.base_stats.attack + self.iv_stats.attack + self.ev_stats.attack / 4) * self.level / 100 + 5)
-    
-    def getAttackSpecial(self: Stats) -> int:
-        """
-        Returns the special attack value of the Stats object.
-
-        Returns:
-            int: The calculated special attack value based on the Stats object's attributes.
-        """
-        return floor((2 * self.base_stats.special_attack + self.iv_stats.special_attack + self.ev_stats.special_attack / 4) * self.level / 100 + 5)
     
     def setStats (self,stats : dict[str,int]) -> None:
         self.stats = stats
