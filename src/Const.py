@@ -1,12 +1,3 @@
-# Relation
-
-RELATION = type("RELATION", (), {})
-
-RELATION.WEAK:str = "weak"
-RELATION.NEUTRAL:str = "neutral"
-RELATION.STRONG:str = "strong"
-RELATION.IMMUNE:str = "immune"
-
 # Category
 
 CATEGORY = type("CATEGORY", (), {})

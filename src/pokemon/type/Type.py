@@ -1,6 +1,6 @@
 from src.pokemon.type.IType import IType
 from src.pokemon.type.CType import CType
-from src.Const import RELATION
+from src.pokemon.type.CRelation import CRelation
 
 class Type(IType):
     def __init__(self, name:str = "") -> None:
@@ -9,11 +9,11 @@ class Type(IType):
         self.weakness:list[CType] = []
         self.strength:list[CType] = []
         
-    def getRelation(self, type) -> RELATION:
+    def getRelation(self, type) -> CRelation:
         Type = type.name
         if Type in self.weakness:
-            return RELATION.WEAK
+            return CRelation.WEAK
         elif Type in self.strength:
-            return RELATION.STRONG
+            return CRelation.STRONG
         else:
-            return RELATION.NEUTRAL
+            return CRelation.NEUTRAL

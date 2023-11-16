@@ -7,8 +7,9 @@ from src.item.helditem.IHeldItem import IHeldItem
 from src.pokemon.status.IStatus import IStatus
 
 from src.pokemon.stats.Stats import Stats
+from src.pokemon.type.CRelation import CRelation
 
-from src.Const import RELATION, GROUP, NATURE
+from src.Const import GROUP, NATURE
 
 from src.Formula import expFormula, gainFormula, criticalFormula, hpFormula,statFormula
 
@@ -153,13 +154,13 @@ class Pokemon(IPokemon):
             type_multipliers.append(self.calculateTypeMultiplier(relation))
         return type_multipliers
 
-    def calculateTypeMultiplier(self, relation: RELATION) -> float:
+    def calculateTypeMultiplier(self, relation: CRelation) -> float:
         '''Calculate individual type multiplier'''
-        if relation == RELATION.STRONG:
+        if relation == CRelation.STRONG:
             return 2
-        elif relation == RELATION.WEAK:
+        elif relation == CRelation.WEAK:
             return 0.5
-        elif relation == RELATION.IMMUNE:
+        elif relation == CRelation.IMMUNE:
             return 0
         else:
             return 1
