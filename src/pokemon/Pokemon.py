@@ -8,7 +8,7 @@ from src.pokemon.status.IStatus import IStatus
 
 from src.pokemon.stats.Stats import Stats
 
-from src.Const import RELATION, GROUP
+from src.Const import RELATION, GROUP, NATURE
 
 from src.Formula import expFormula, gainFormula, criticalFormula, hpFormula,statFormula
 
@@ -23,6 +23,7 @@ class Pokemon(IPokemon):
                  expGroup:GROUP,
                  expYielded:int,
                  types: list[IType],
+                 nature: NATURE,
                  attacks: list[IAttack],
                  stats: Stats = None,
                  isWild: bool = True,
@@ -31,13 +32,14 @@ class Pokemon(IPokemon):
         self.name = name
         self.specie = specie
         self.stats = stats if stats is not None else Stats(level)
-        self.hpMax = hpFormula(self.stats.getBaseStats().get_hp(), self.stats.getEVStats().getHp(), self.stats.getIVStats().getHp(), level)
+        self.hpMax = hpFormula(self.stats.getBaseStats().getHp(), self.stats.getEVStats().getHp(), self.stats.getIVStats().getHp(), level)
         self.hp = self.hpMax
         self.level = level
         self.exp = exp
         self.expGroup = expGroup
         self.expYielded = expYielded
         self.types = types
+        self.nature = nature
         self.attacks = attacks
         self.wild = isWild
         self.heldItem = heldItem
@@ -54,6 +56,7 @@ class Pokemon(IPokemon):
     def getExpGroup(self: IPokemon) -> GROUP:return self.expGroup
     def getExpYielded(self: IPokemon) -> int:return self.expYielded
     def getTypes(self) -> list[IType]:return self.types
+    def getNature(self) -> NATURE:return self.nature
     def getAttacks(self) -> list[IAttack]:return self.attacks
     def getStats(self) -> Stats:return self.stats
     def getHeldItem(self) -> IHeldItem:return self.heldItem

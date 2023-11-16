@@ -7,5 +7,3 @@ if __name__ in "__main__":
     ember = charmander.getAttacks()[1]
     while bulbasaur.isAlive():
         charmander.attack(bulbasaur, ember)
-
-    print(charmander.stats.getStats())

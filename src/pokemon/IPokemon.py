@@ -6,7 +6,7 @@ from src.pokemon.type.IType import IType
 from src.pokemon.attack.IAttack import IAttack
 from src.pokemon.stats.Stats import Stats
 
-from src.Const import GROUP
+from src.Const import GROUP, NATURE
 
 class IPokemon(ABC):
     @abstractmethod
@@ -29,6 +29,8 @@ class IPokemon(ABC):
     def getTypes(self: IPokemon) -> list[IType]:pass
     @abstractmethod
     def getAttacks(self: IPokemon) -> list[IAttack]:pass
+    @abstractmethod
+    def getNature(self: IPokemon) -> NATURE:pass
     @abstractmethod
     def getStats(self: IPokemon) -> Stats:pass
     @abstractmethod
