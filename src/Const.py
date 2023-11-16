@@ -76,6 +76,8 @@ NATURE.SASSY = "Sassy"
 NATURE.CAREFUL = "Careful"
 NATURE.QUIRKY = "Quirky"
 
+NATURE_LIST = [getattr(NATURE, attr) for attr in dir(NATURE) if not callable(getattr(NATURE, attr)) and not attr.startswith("__")]
+
 NATURE_TABLE = {
     NATURE.HARDY: {STATS.ATTACK: 1, STATS.DEFENSE: 1, STATS.SPECIAL_ATTACK: 1, STATS.SPECIAL_DEFENSE: 1, STATS.SPEED: 1},
     

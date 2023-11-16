@@ -4,7 +4,7 @@ from src.pokemon.attack.concreteattack.EmberAttack import EmberAttack
 from src.pokemon.stats.Stats import Stats
 from src.pokemon.stats.BaseStats import BaseStats
 from src.pokemon.type.concretetype.FireType import FireType
-from src.Const import GROUP, NATURE
+from src.Const import GROUP, NATURE, NATURE_LIST
 from random import choice
 
 class Charmander(Pokemon):
@@ -20,7 +20,7 @@ class Charmander(Pokemon):
         if attacks is None:
             attacks = [TackleAttack(), EmberAttack()]
         if nature is None:
-            nature = choice([getattr(NATURE, attr) for attr in dir(NATURE) if not callable(getattr(NATURE, attr)) and not attr.startswith("__")])
+            nature = choice(NATURE_LIST)
         if stats is None:
             stats = Stats(level, nature, BaseStats(39, 52, 43, 60, 50, 65))
         super().__init__(name, "Charmander", level, exp, GROUP.MEDIUM_SLOW, 65, [FireType()], nature, attacks, stats, isWild, heldItem)
