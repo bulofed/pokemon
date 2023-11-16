@@ -12,12 +12,14 @@ class Bulbasaur(Pokemon):
                  level = 1,
                  exp = 0,
                  nature = None,
-                 attacks = [TackleAttack],
+                 attacks=None,
                  stats = None,
                  isWild = True,
                  heldItem = None):
-        if stats is None:
-            stats = Stats(level, BaseStats(45, 49, 49, 65, 65, 45))
+        if attacks is None:
+            attacks = [TackleAttack]
         if nature is None:
-            nature = choice(list(NATURE.__dict__.values()))
+            nature = choice([getattr(NATURE, attr) for attr in dir(NATURE) if not callable(getattr(NATURE, attr)) and not attr.startswith("__")])
+        if stats is None:
+            stats = Stats(level, nature, BaseStats(45, 49, 49, 65, 65, 45))
         super().__init__(name, "Bulbasaur", level, exp, GROUP.MEDIUM_SLOW, 64, [GrassType()], nature, attacks, stats, isWild, heldItem)

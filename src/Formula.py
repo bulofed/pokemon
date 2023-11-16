@@ -1,7 +1,7 @@
 from math import floor
-from src.Const import GROUP, STATS
-from src.item.helditem.HeldItem import HeldItem
-from src.pokemon.status.Status import Status
+from src.Const import GROUP, STATS, NATURE, nature_table
+from src.item.helditem.IHeldItem import IHeldItem
+from src.pokemon.status.IStatus import IStatus
 from random import randint
 
 def expFormula(expGroup: GROUP, level: int, exp: int) -> (int, int):
@@ -67,7 +67,7 @@ def gainFormula(isWild: bool, expYielded: int, level: int) -> int:
     multiplier = 1 if isWild else 1.5
     return floor(expYielded * level / 7 * multiplier)
 
-def criticalFormula(attackStage: int, heldItem: HeldItem, status_list: list[Status]) -> bool:
+def criticalFormula(attackStage: int, heldItem: IHeldItem, status_list: list[IStatus]) -> bool:
     '''Calculate if the attack is critical or not
     
     args:
@@ -104,7 +104,11 @@ def hpFormula(base: int, ev: int, iv: int, level: int) -> int:
         
     return floor(0.01 * (2 * base + iv + floor(0.25 * ev)) * level + level + 10)
 
-def statFormula(base: dict[str,int],ev:dict[str,int],iv:dict[str,int],level : int,nature : int = 1) -> dict[str,int]:
+def statFormula(base: dict[str,int],
+                ev:dict[str,int],
+                iv:dict[str,int],
+                level: int,
+                nature: NATURE) -> dict[str,int]:
     '''Calculate the stats lvl up of a pokemon w/ hp
     
     args:
@@ -114,14 +118,14 @@ def statFormula(base: dict[str,int],ev:dict[str,int],iv:dict[str,int],level : in
         
     returns:
         dict[str,int]: The stats of the pokemon'''
-        
+            
     new_stats: dict[str, int] = {
         stat: floor(
             (
                 ((2 * base[stat] + iv[stat] + (ev[stat] // 4) * level) // 100)
                 + 5
             )
-            * nature
+            * nature_table[nature][stat]
         )
         if stat != STATS.HP
         else hpFormula(base[stat], ev[stat], iv[stat], level)

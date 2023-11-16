@@ -19,8 +19,8 @@ class Charmander(Pokemon):
                  heldItem = None):
         if attacks is None:
             attacks = [TackleAttack(), EmberAttack()]
-        if stats is None:
-            stats = Stats(level, BaseStats(39, 52, 43, 60, 50, 65))
         if nature is None:
-            nature = choice(list(NATURE.__dict__.values()))
+            nature = choice([getattr(NATURE, attr) for attr in dir(NATURE) if not callable(getattr(NATURE, attr)) and not attr.startswith("__")])
+        if stats is None:
+            stats = Stats(level, nature, BaseStats(39, 52, 43, 60, 50, 65))
         super().__init__(name, "Charmander", level, exp, GROUP.MEDIUM_SLOW, 65, [FireType()], nature, attacks, stats, isWild, heldItem)

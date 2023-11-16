@@ -31,7 +31,7 @@ class Pokemon(IPokemon):
                  ):
         self.name = name
         self.specie = specie
-        self.stats = stats if stats is not None else Stats(level)
+        self.stats = stats if stats is not None else Stats(level, nature)
         self.hpMax = hpFormula(self.stats.getBaseStats().getHp(), self.stats.getEVStats().getHp(), self.stats.getIVStats().getHp(), level)
         self.hp = self.hpMax
         self.level = level
@@ -123,7 +123,7 @@ class Pokemon(IPokemon):
         a = self.stats.getAttack(attack.getCategory())
         d = target.stats.getDefense(attack.getCategory())
         stab = self.calculateStabMultiplier(attack)
-        critical_hit = self.calculateCriticalHit(attack)
+        critical_hit = criticalFormula(attack.getStage(), self.heldItem, self.status)
         type_multipliers = self.calculateTypeMultipliers(attack, target.types)
 
         type1, type2 = type_multipliers[:2] + [1] * (2 - len(type_multipliers))
@@ -144,11 +144,7 @@ class Pokemon(IPokemon):
     def calculateStabMultiplier(self, attack: IAttack) -> float:
         '''Calculate STAB multiplier'''
         return 1.5 if attack.getType() in self.types else 1
-
-    def calculateCriticalHit(self, attack: IAttack) -> bool:
-        '''Calculate if the attack is a critical hit'''
-        return criticalFormula(attack.getStage(), self.heldItem, self.status)
-
+        
     def calculateTypeMultipliers(self, attack: IAttack, target_types: list[str]) -> list[float]:
         '''Calculate type multipliers'''
         type_multipliers = []
@@ -213,13 +209,14 @@ class Pokemon(IPokemon):
         if self.level > oldLevel:
             self.levelUp(target)
 
-    def levelUp(self, target: Pokemon) -> None:
+    def levelUp(self) -> None:
         '''Handle actions when the attacker levels up'''
         print(f'{self.getName()} grew to level {self.level} !\n')
         new_stat: dict[str, int] = statFormula(
             self.stats.getBaseStats().getStats(),
             self.stats.getEVStats().getStats(),
             self.stats.getIVStats().getStats(),
-            self.level
+            self.level,
+            self.nature
         )
         self.stats.setStats(new_stat)

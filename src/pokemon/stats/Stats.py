@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from src.Const import CATEGORY, STATS
+from src.Const import CATEGORY, STATS, NATURE
 from src.pokemon.stats.BaseStats import BaseStats
 from src.pokemon.stats.IVStats import IVStats
 from src.pokemon.stats.EVStats import EVStats
@@ -10,15 +10,17 @@ class Stats():
     
     def __init__(self: Stats,
                  level: int,
+                 nature: NATURE,
                  base_stats: BaseStats,
                  iv_stats: IVStats = IVStats(),
                  ev_stats: EVStats = EVStats()
                  ) -> None:
         self.level = level
+        self.nature = nature
         self.base_stats = base_stats
         self.iv_stats = iv_stats
         self.ev_stats = ev_stats
-        self.stats = statFormula(self.base_stats.getStats(), self.ev_stats.getStats(), self.iv_stats.getStats(), self.level)
+        self.stats = statFormula(self.base_stats.getStats(), self.ev_stats.getStats(), self.iv_stats.getStats(), self.level, self.nature)
         
     def getLevel(self: Stats) -> int:return self.level
     def getBaseStats(self: Stats) -> BaseStats:return self.base_stats
