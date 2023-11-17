@@ -1,8 +1,8 @@
-from src.pokemon.elements.type.IType import IType
+from src.pokemon.elements.type.Type import Type
 from src.pokemon.elements.type.CType import CType
 
 
-class WaterType(IType):
+class WaterType(Type):
     def __init__(self) -> None:
         super().__init__()
         self.name = CType.WATER

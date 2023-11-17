@@ -174,7 +174,7 @@ class Pokemon(IPokemon):
         '''Calculate total type multiplier'''
         return type1 * type2 if type2 is not None else type1
 
-    def calculateEfficacityMessage(self, multiplier: float, target: Pokemon) -> str:
+    def calculateEfficacityMessage(self, multiplier: float, target: IPokemon) -> str:
         '''Calculate the efficacy message based on multiplier'''
         if multiplier == 0:
             return f"It doesn't affect {target.getName()}"
@@ -195,7 +195,7 @@ class Pokemon(IPokemon):
         damage = int(base_damage * stab * multiplier * random_factor)
         return damage * 2 if critical_hit else damage
 
-    def inflictDamage(self, target: Pokemon, damage: int, attack: IAttack, critical_hit: bool, efficacityMessage: str) -> None:
+    def inflictDamage(self, target: IPokemon, damage: int, attack: IAttack, critical_hit: bool, efficacityMessage: str) -> None:
         '''Inflict damage to the target and print the results'''
         target.addHp(-damage)
         print(f'{self.getName()} used {attack.getName()}')
@@ -207,7 +207,7 @@ class Pokemon(IPokemon):
         if not target.isAlive():
             self.handleFaintedTarget(target)
 
-    def handleFaintedTarget(self, target: Pokemon) -> None:
+    def handleFaintedTarget(self, target: IPokemon) -> None:
         '''Handle actions when the target faints'''
         expYielded = gainFormula(
             target.wild, target.getExpYielded(), target.getLevel())

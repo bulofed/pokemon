@@ -1,7 +1,7 @@
-from src.pokemon.elements.type.IType import IType
+from src.pokemon.elements.type.IType import Type
 from src.pokemon.elements.type.CType import CType
 
-class DivineType(IType):
+class DivineType(Type):
     def __init__(self) -> None:
         super().__init__()
         self.name = CType.DIVINE
