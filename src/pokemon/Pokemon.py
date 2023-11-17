@@ -215,7 +215,7 @@ class Pokemon(IPokemon):
         print(
             f'{target.getName()} fainted\n{self.getName()} gained {expYielded} exp.\n')
         if self.level > oldLevel:
-            self.levelUp(target)
+            self.levelUp()
 
     def levelUp(self) -> None:
         '''Handle actions when the attacker levels up'''

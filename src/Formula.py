@@ -46,7 +46,7 @@ def expFormula(expGroup: CGroup, level: int, exp: int) -> (int, int):
     }
 
     expNeeded = floor(next(threshold[1](
-        level) for threshold in expThresholds[expGroup] if level < threshold[0]))
+        level) for threshold in expThresholds[expGroup.value] if level < threshold[0]))
 
     while exp >= expNeeded:
         if level == 100:
@@ -55,7 +55,7 @@ def expFormula(expGroup: CGroup, level: int, exp: int) -> (int, int):
         level += 1
         exp -= expNeeded
         expNeeded = floor(next(threshold[1](
-            level) for threshold in expThresholds[expGroup] if level < threshold[0]))
+            level) for threshold in expThresholds[expGroup.value] if level < threshold[0]))
 
     return level, floor(exp)
 
