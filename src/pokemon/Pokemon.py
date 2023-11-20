@@ -30,6 +30,7 @@ class Pokemon(IPokemon):
                  stats: Stats = None,
                  isWild: bool = True,
                  heldItem: IHeldItem = None,
+                 evolution: (int, IPokemon) = None,
                  ):
         self.name = name
         self.specie = specie
@@ -47,6 +48,7 @@ class Pokemon(IPokemon):
         self.wild = isWild
         self.heldItem = heldItem
         self.status: list[IStatus] = []
+        self.evolution = evolution
 
     # Getters
 
@@ -65,6 +67,7 @@ class Pokemon(IPokemon):
     def getHeldItem(self) -> IHeldItem: return self.heldItem
     def getStatus(self) -> list[IStatus]: return self.status
     def isWild(self) -> bool: return self.wild
+    def getEvolution(self) -> tuple(int, IPokemon): return self.evolution
 
     def addHp(self, hp: int) -> None:
         '''Add hp to the pokemon and prevent it from exceeding the max hp
@@ -75,7 +78,7 @@ class Pokemon(IPokemon):
         self.hp += hp
         self.hp = min(self.hp, self.hpMax)
 
-    def addExp(self, exp: int) -> None:
+    def addExp(self, expYielded: int) -> None:
         '''Add exp to the pokemon and level it up if it has enough exp
 
         args:
@@ -84,7 +87,7 @@ class Pokemon(IPokemon):
         if self.level == 100:
             return self.level
         oldLevel = self.level
-        newLevel, remainingExp = expFormula(self.expGroup, self.level, exp)
+        newLevel, remainingExp = expFormula(self.expGroup, self.level, expYielded + self.exp)
         self.level = newLevel
         self.stats.level = newLevel
         self.exp = remainingExp
@@ -216,9 +219,11 @@ class Pokemon(IPokemon):
             f'{target.getName()} fainted\n{self.getName()} gained {expYielded} exp.\n')
         if self.level > oldLevel:
             self.levelUp()
+            if self.evolution is not None and self.level >= self.evolution[0]:
+                self.evolve()
 
     def levelUp(self) -> None:
-        '''Handle actions when the attacker levels up'''
+        '''Handle actions when a pokemon levels up'''
         print(f'{self.getName()} grew to level {self.level} !\n')
         new_stat: dict[str, int] = statFormula(
             self.stats.getBaseStats().getStats(),
@@ -228,3 +233,14 @@ class Pokemon(IPokemon):
             self.nature
         )
         self.stats.setStats(new_stat)
+        self.hpMax = hpFormula(self.stats.getBaseStats().getHp(
+        ), self.stats.getEVStats().getHp(), self.stats.getIVStats().getHp(), self.level)
+        
+    def evolve(self) -> None:
+        '''Handle actions when a pokemon evolve'''
+        newPokemon = self.evolution[1]
+        self.specie = newPokemon.getSpecie()
+        self.stats = newPokemon.getStats()
+        self.types = newPokemon.getTypes()
+        self.evolution = newPokemon.getEvolution()
+        print(f'Oh ? {self.name} evolve !\n{self.name} evolved into {self.specie} !')

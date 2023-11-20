@@ -48,11 +48,11 @@ class IPokemon(ABC):
     def addExp(self: IPokemon, exp: int) -> None: pass
     @abstractmethod
     def isAlive(self: IPokemon) -> bool: pass
-
+    @abstractmethod
+    def getEvolution(self: IPokemon) -> tuple: pass
     @abstractmethod
     def addAttack(self: IPokemon, attack: IAttack,
                   attackToReplace: IAttack) -> None: pass
-
     @abstractmethod
     def removeAttack(self: IPokemon, attack: IAttack) -> None: pass
     @abstractmethod

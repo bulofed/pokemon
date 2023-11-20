@@ -8,7 +8,7 @@ from src.pokemon.elements.status.IStatus import IStatus
 from random import randint
 
 
-def expFormula(expGroup: CGroup, level: int, exp: int) -> (int, int):
+def expFormula(expGroup: CGroup, level: int, expTotal: int) -> (int, int):
     '''Calculate the level and the remaining exp of a pokemon after gaining exp
 
     args:
@@ -48,16 +48,16 @@ def expFormula(expGroup: CGroup, level: int, exp: int) -> (int, int):
     expNeeded = floor(next(threshold[1](
         level) for threshold in expThresholds[expGroup.value] if level < threshold[0]))
 
-    while exp >= expNeeded:
+    while expTotal >= expNeeded:
         if level == 100:
-            exp = expNeeded
-            return level, int(exp)
+            expTotal = expNeeded
+            return level, int(expNeeded)
         level += 1
-        exp -= expNeeded
+        expTotal -= expNeeded
         expNeeded = floor(next(threshold[1](
             level) for threshold in expThresholds[expGroup.value] if level < threshold[0]))
 
-    return level, floor(exp)
+    return level, floor(expTotal)
 
 
 def gainFormula(isWild: bool, expYielded: int, level: int) -> int:
