@@ -240,7 +240,11 @@ class Pokemon(IPokemon):
         '''Handle actions when a pokemon evolve'''
         newPokemon = self.evolution[1]
         self.specie = newPokemon.getSpecie()
+        ivStats = self.stats.getIVStats()
+        evStats = self.stats.getEVStats()
         self.stats = newPokemon.getStats()
+        self.stats.iv_stats = ivStats
+        self.stats.ev_stats = evStats
         self.types = newPokemon.getTypes()
         self.evolution = newPokemon.getEvolution()
         print(f'Oh ? {self.name} evolve !\n{self.name} evolved into {self.specie} !')
